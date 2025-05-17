@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgrrs6wqpb41j"]
+
+[ext_resource type="Script" uid="uid://bvecvvd3hdrqd" path="res://mob.gd" id="1_1qmh0"]
+[ext_resource type="Texture2D" uid="uid://dwfr2lw7shvsj" path="res://art/stone2.svg" id="3_ubaqv"]
+[ext_resource type="Texture2D" uid="uid://deu33eo8orp50" path="res://art/stone1.svg" id="4_gfurk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pcqmr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_gfurk")
+}],
+"loop": true,
+"name": &"stone1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ubaqv")
+}],
+"loop": true,
+"name": &"stone2",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3mxk"]
+radius = 48.0
+height = 96.0
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_1qmh0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.999999, 0.999999)
+scale = Vector2(0.214879, 0.214879)
+sprite_frames = SubResource("SpriteFrames_pcqmr")
+animation = &"stone1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 2)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_b3mxk")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2, 2)
+scale = Vector2(1.7, 1.7)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
